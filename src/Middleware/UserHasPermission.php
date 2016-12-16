@@ -27,6 +27,8 @@ class UserHasPermission
     }
 
     /**
+     * Request filter.
+     *
      * @param $request
      * @param Closure $next
      * @param string $permissions
@@ -60,6 +62,8 @@ class UserHasPermission
     }
 
     /**
+     * Get the "ident" from Route, example "HomeController@index"
+     *
      * @return string
      */
     private function getIdentFromRoute()

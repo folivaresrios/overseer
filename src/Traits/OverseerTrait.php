@@ -13,6 +13,7 @@ namespace KissDev\Overseer\Traits;
 trait OverseerTrait
 {
     /**
+     * Users can belong to many profiles.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function profiles()
@@ -21,6 +22,8 @@ trait OverseerTrait
     }
 
     /**
+     * Get all user profiles.
+     *
      * @param string $column
      * @return mixed
      */
@@ -32,28 +35,46 @@ trait OverseerTrait
     }
 
     /**
-     * @param null $roleId
+     * Assigns the given profile to the user.
+     *
+     * @param null $profileId
      * @return bool|void
      */
-    public function assignProfile($roleId = null)
+    public function assignProfile($profileId = null)
     {
         $profile = $this->getProfiles('id');
-        if (!$profile->contains($roleId)) {
-            return $this->profiles()->attach($roleId);
+        if (!$profile->contains($profileId)) {
+            return $this->profiles()->attach($profileId);
         }
         return false;
     }
 
     /**
-     * @param null $roleId
+     * Revokes the given profile from the user.
+     *
+     * @param null $profileId
      * @return int
      */
-    public function revokeProfile($roleId = null)
+    public function revokeProfile($profileId = null)
     {
-        return $this->profiles()->detach($roleId);
+        return $this->profiles()->detach($profileId);
     }
 
     /**
+     * Syncs the given profile(s) with the user.
+     *
+     * @param array $profileId
+     *
+     * @return bool
+     */
+    public function syncRoles(array $profileId)
+    {
+        return $this->profiles()->sync($profileId);
+    }
+
+    /**
+     * Revokes all profiles from the user.
+     *
      * @return int
      */
     public function revokeAllProfiles()
@@ -62,6 +83,8 @@ trait OverseerTrait
     }
 
     /**
+     * Get all user profile permissions.
+     *
      * @return mixed
      */
     public function getPermissions()
@@ -74,6 +97,8 @@ trait OverseerTrait
     }
 
     /**
+     * Check if user has the given permission.
+     *
      * @param $permission
      * @return bool
      */
@@ -89,6 +114,8 @@ trait OverseerTrait
     }
 
     /**
+     * Checks if the user has the given profile.
+     *
      * @param $name
      * @return bool
      */

@@ -12,11 +12,15 @@ use Illuminate\Support\ServiceProvider;
 class OverseerServiceProvider extends ServiceProvider
 {
     /**
+     * Indicates of loading of the provider is deferred.
+     *
      * @var bool
      */
     protected $defer = false;
 
     /**
+     * Boot the service provider.
+     *
      * @return void
      */
     public function boot()
@@ -29,6 +33,8 @@ class OverseerServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the service provider.
+     *
      * @return void
      */
     public function register()
@@ -41,6 +47,8 @@ class OverseerServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register the blade directives.
+     *
      * @return void
      */
     public function registerBladeDirectives()
@@ -62,6 +70,8 @@ class OverseerServiceProvider extends ServiceProvider
     }
 
     /**
+     * Get the services provided by the provider.
+     *
      * @return array
      */
     public function provides()

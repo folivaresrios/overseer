@@ -25,6 +25,8 @@ class UserHasProfile
     }
 
     /**
+     * Request filter.
+     *
      * @param $request
      * @param Closure $next
      * @param $role

@@ -13,14 +13,22 @@ class Permission extends Model
 {
 
     /**
+     * The attributes that are fillable via mass assignment.
+     *
      * @var array
      */
     protected $fillable = ['ident', 'description'];
+
     /**
+     * The database table used by the model.
+     *
      * @var string
      */
     protected $table = 'permissions';
+
     /**
+     * Permissions can belong to many profiles.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function profiles()
@@ -29,8 +37,9 @@ class Permission extends Model
     }
 
     /**
+     * Assigns the given role to the permission.
+     *
      * @param null $profileId
-     * @return bool|void
      */
     public function assignRole($profileId = null)
     {
@@ -38,24 +47,41 @@ class Permission extends Model
         if (!$profiles->contains($profileId)) {
             return $this->profiles()->attach($profileId);
         }
-        return false;
     }
 
     /**
+     * Revokes the given profile from the permission.
+     *
      * @param null $profileId
      * @return int
      */
     public function revokeProfile($profileId = null)
     {
-        return $this->profiles()->detach($profileId);
+        if(!empty($profileId)){
+            return $this->profiles()->detach((array)$profileId);
+        }
     }
 
     /**
-     * @param array $profileId
+     * Syncs the given profile(s) with the permission.
+     *
+     * @param null $profileId
      * @return array
      */
-    public function syncProfiles(array $profileId = [])
+    public function syncProfiles($profileId = null)
     {
-        return $this->profiles()->sync($profileId);
+        if(!empty($profileId)){
+            return $this->profiles()->sync((array)$profileId);
+        }
+    }
+
+    /**
+     * Revokes all roles from the permission.
+     *
+     * @return int
+     */
+    public function revokeAllRoles()
+    {
+        return $this->profiles()->detach();
     }
 }

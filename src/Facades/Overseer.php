@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Facade;
 class Overseer extends Facade
 {
     /**
+     * Register component's name.
+     *
      * @return string
      */
     protected static function getFacadeAccessor()

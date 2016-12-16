@@ -13,15 +13,22 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
     /**
+     * The attributes that are fillable via mass assignment.
+     *
      * @var array
      */
     protected $fillable = ['name', 'description'];
+
     /**
+     * The database table used by the model.
+     *
      * @var string
      */
     protected $table = 'profiles';
 
     /**
+     * Profiles can belong to many users.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
@@ -30,6 +37,8 @@ class Profile extends Model
     }
 
     /**
+     * Profiles can belong to many permissions.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function permissions()
@@ -38,6 +47,8 @@ class Profile extends Model
     }
 
     /**
+     * Get permission "ident" assigned to profile.
+     *
      * @return array
      */
     public function getPermissions()
@@ -50,6 +61,8 @@ class Profile extends Model
     }
 
     /**
+     * Checks if the profiles has the given permission.
+     *
      * @param $permission
      * @return bool
      */
@@ -60,6 +73,23 @@ class Profile extends Model
     }
 
     /**
+     * Assigns the given permission to the profile.
+     *
+     * @param null $permissionId
+     *
+     * @return bool
+     */
+    public function assignPermission($permissionId = null)
+    {
+        $permissions = $this->permissions;
+        if (!$permissions->contains($permissionId)) {
+            return $this->permissions()->attach($permissionId);
+        }
+    }
+
+    /**
+     * Revokes the given permission from the profile.
+     *
      * @param null $permissionId
      * @return bool|int
      */
@@ -72,15 +102,19 @@ class Profile extends Model
     }
 
     /**
-     * @param array $permissionIds
+     * Syncs the given permission(s) with the profile.
+     *
+     * @param null $permissionIds
      * @return array
      */
-    public function syncPermissions(array $permissionIds = [])
+    public function syncPermissions(array $permissionIds = null)
     {
-        return $this->permissions()->sync($permissionIds);
+        return $this->permissions()->sync((array)$permissionIds);
     }
 
     /**
+     * Revokes all permissions from the profile.
+     *
      * @return int
      */
     public function revokeAllPermissions()

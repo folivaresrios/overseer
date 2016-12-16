@@ -27,6 +27,8 @@ class Overseer
     }
 
     /**
+     * Checks if user has the given permissions.
+     *
      * @param $permissions
      * @return bool
      */
@@ -44,6 +46,8 @@ class Overseer
     }
 
     /**
+     * Checks if user is assigned the given profile.
+     *
      * @param $profile
      * @return bool
      */
