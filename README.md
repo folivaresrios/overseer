@@ -1,24 +1,44 @@
 kissDev Overseer Package
 ===================
-[![Laravel 5.3](https://img.shields.io/badge/Laravel-5.3-orange.svg?style=flat-square)](http://laravel.com)
+[![Laravel 5.3](https://img.shields.io/badge/Laravel-5.3-red.svg?style=flat-square)](http://laravel.com)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
 
-Overseer brings a simple profile-based permissions system to Laravel's built in Auth system. Overseer brings support for the following ACL structure:
+Overseer provides a simple profile-based permissions system to Laravel's built in Auth system. Overseer provides support for the following ACL structure:
 
 - Every user can have zero or more profiles.
 - Every profile can have zero or more permissions.
 
 Permissions are then inherited to the user through the user's assigned profiles.
 
-The package follows the FIG standards PSR-1, PSR-2, and PSR-4 to ensure a high level of interoperability between shared PHP code. At the moment the package is not unit tested, but is planned to be covered later down the road.
+The package follows the FIG standards [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md), [PSR-2] (https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md), and [PSR-4](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md). 
+This package is not unit tested, but is planned to be covered.
 
 Documentation
 -------------
-Coming soon in wiki here: [KissDev Overseer Wiki](https://github.com/folivaresrios/Overseer/wiki)
+Coming soon in wiki: [KissDev Overseer Wiki](https://github.com/folivaresrios/overseer/wiki)
+
+Requirements
+------------
+The master branch has the following requirements:
+
+* Laravel 5.* or greater.
+* PHP 5.6.4 or greater.
 
 How to Install?
 ---------------
-Begin by installing the package through Composer. The best way to do this is through your terminal via Composer itself:
+_[Using [Composer](http://getcomposer.org/)]_
+
+Add the plugin to your project's `composer.json` - something like this:
+
+```javascript
+{
+  "require": {
+    "folivaresrios/overseer": "^1.0"
+  }
+}
+```
+
+or through command line
 
 ```
 composer require folivaresrios/overseer
@@ -28,15 +48,15 @@ composer require folivaresrios/overseer
 Once this operation is complete, simply add the service provider and alias to your project's `config/app.php` file and run the provided migrations against your database.
 ```php
 'providers' => [
-    /...
-    KissDev\Overseer\OverseerServiceProvider::class
+    //...
+    KissDev\Overseer\OverseerServiceProvider::class,
     //...
 ];
 ```
 ```php
 'aliases' => [
     // ...
-        'Overseer' => KissDev\Overseer\Facades\Overseer::class,
+    'Overseer' => KissDev\Overseer\Facades\Overseer::class,
     // ...
 ],
 ```
@@ -53,7 +73,7 @@ php artisan migrate
 Add the following middleware to the $routeMiddleware array in app/Http/Kernel.php BEFORE the EncryptCookies middleware:
 
 ```php
-protected $middleware = [
+protected $routeMiddleware = [
     //...
     'profile.overseer' => \KissDev\Overseer\Middleware\UserHasProfile::class,
     'permissions.overseer' => \KissDev\Overseer\Middleware\UserHasPermission::class,
@@ -61,4 +81,12 @@ protected $middleware = [
 ];
 ```
 
-Created something you'd like added? Send a pull-request or open an issue!
+## Reporting Issues
+
+If you have a problem with DebugKit please open an issue on [GitHub](https://github.com/folivaresrios/overseer/issues).
+
+## Contributing
+
+If you'd like to contribute to Overseer creating something you'd like added, send a [pull
+requests](https://help.github.com/articles/using-pull-requests) or open
+[issues](https://github.com/folivaresrios/overseer/issues).
