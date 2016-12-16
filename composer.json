@@ -1,0 +1,34 @@
+{
+  "name": "folivaresrios/overseer",
+  "description": "Laravel package designed to manage profiles and permissions based on Routing Laravel Features",
+  "keywords": [
+    "laravel",
+    "acl",
+    "profiles",
+    "permissions",
+    "auth",
+    "kissdev",
+    "overseer"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fabián Olivares Ríos",
+      "email": "f.olivaresrios@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "KissDev\\Overseer\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=5.6.4",
+    "illuminate/database": "5.3.*",
+    "illuminate/support": "5.3.*",
+    "illuminate/filesystem": "5.3.*",
+    "illuminate/config": "5.3.*",
+    "illuminate/routing": "5.3.*"
+  },
+  "minimum-stability": "stable"
+}
