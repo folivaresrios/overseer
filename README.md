@@ -15,7 +15,7 @@ This package is not unit tested, but is planned to be covered.
 
 Documentation
 -------------
-Coming soon in wiki: [KissDev Overseer Wiki](https://github.com/folivaresrios/overseer/wiki)
+Wiki: [KissDev Overseer Wiki](https://github.com/folivaresrios/overseer/wiki)
 
 Requirements
 ------------
