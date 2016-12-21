@@ -26,7 +26,7 @@ trait OverseerTrait
     public function getProfiles($column = 'name')
     {
         if ($this->profiles) {
-            return $this->profiles->pluck($column)->all();
+            return $this->profiles->pluck($column);
         }
     }
 
@@ -103,7 +103,7 @@ trait OverseerTrait
     public function isAuthorized($permission)
     {
         foreach ($this->profiles as $profile) {
-            $myPermissions = $profile->permissions->pluck('ident')->all();
+            $myPermissions = $profile->permissions->pluck('ident');
             if ($myPermissions->contains($permission) || $myPermissions->contains('*')) {
                 return true;
             }
@@ -136,7 +136,7 @@ trait OverseerTrait
      */
     public function isActivePermission($permision)
     {
-        $myPermision = \KissDev\Overseer\Models\Permission::where('ident', '=', $permision)->get();
+        $myPermision = \KissDev\Overseer\Models\Permission::where('ident', '=', $permision)->firstOrFail();
         if ($myPermision->active) {
             return true;
         }
