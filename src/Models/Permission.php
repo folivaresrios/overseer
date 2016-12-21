@@ -17,7 +17,7 @@ class Permission extends Model
      *
      * @var array
      */
-    protected $fillable = ['ident', 'description'];
+    protected $fillable = ['ident', 'description', 'active'];
 
     /**
      * The database table used by the model.
@@ -37,11 +37,11 @@ class Permission extends Model
     }
 
     /**
-     * Assigns the given role to the permission.
+     * Assigns the given profile to the permission.
      *
      * @param null $profileId
      */
-    public function assignRole($profileId = null)
+    public function assignProfile($profileId = null)
     {
         $profiles = $this->profiles;
         if (!$profiles->contains($profileId)) {
@@ -76,11 +76,11 @@ class Permission extends Model
     }
 
     /**
-     * Revokes all roles from the permission.
+     * Revokes all profiles from the permission.
      *
      * @return int
      */
-    public function revokeAllRoles()
+    public function revokeAllProfiles()
     {
         return $this->profiles()->detach();
     }

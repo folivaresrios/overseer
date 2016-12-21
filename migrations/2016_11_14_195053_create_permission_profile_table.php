@@ -3,7 +3,10 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProfilesPermissionsTable extends Migration
+/**
+ * Class CreateProfilesPermissionsTable
+ */
+class CreatePermissionProfileTable extends Migration
 {
 
     /**
@@ -13,7 +16,7 @@ class CreateProfilesPermissionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('profiles_permissions', function (Blueprint $table) {
+        Schema::create('permission_profile', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('profile_id')->unsigned()->index();
             $table->integer('permission_id')->unsigned()->index();
@@ -32,7 +35,7 @@ class CreateProfilesPermissionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('profiles_permissions');
+        Schema::drop('permission_profile');
     }
 
 }

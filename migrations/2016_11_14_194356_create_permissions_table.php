@@ -3,6 +3,9 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Class CreatePermissionsTable
+ */
 class CreatePermissionsTable extends Migration
 {
 
@@ -17,6 +20,7 @@ class CreatePermissionsTable extends Migration
             $table->increments('id');
             $table->string('ident');
             $table->string('description');
+            $table->boolean('active')->default(1);
             $table->timestamps();
 
             //Setup index

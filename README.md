@@ -83,7 +83,7 @@ protected $routeMiddleware = [
 
 ## Reporting Issues
 
-If you have a problem with DebugKit please open an issue on [GitHub](https://github.com/folivaresrios/overseer/issues).
+If you have a problem with Overseer please open an issue on [GitHub](https://github.com/folivaresrios/overseer/issues).
 
 ## Contributing
 

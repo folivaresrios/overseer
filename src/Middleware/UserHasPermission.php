@@ -39,6 +39,9 @@ class UserHasPermission
         $permissions = $this->getIdentFromRoute();
 
         if ($this->auth->check()) {
+            if (!$this->auth->user()->isActivePermission($permissions)) {
+                abort(401, 'Unauthorized action.');
+            }
             if (!$this->auth->user()->isAuthorized($permissions)) {
                 if ($request->ajax()) {
                     return response('Unauthorized action.', 401);
@@ -54,7 +57,7 @@ class UserHasPermission
                     }
                     abort(401, 'Unauthorized action.');
                 }
-            }else{
+            } else {
                 abort(401, 'Unauthorized action.');
             }
         }
@@ -69,7 +72,7 @@ class UserHasPermission
     private function getIdentFromRoute()
     {
         $currentRouteAction = class_basename(Route::currentRouteAction());
-        if($currentRouteAction == null){
+        if ($currentRouteAction == null) {
             abort(401, 'Unauthorized action.');
         }
         return $currentRouteAction;

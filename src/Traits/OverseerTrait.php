@@ -6,10 +6,6 @@ namespace KissDev\Overseer\Traits;
  * Class OverseerTrait
  * @package KissDev\Overseer\Traits
  */
-/**
- * Class OverseerTrait
- * @package KissDev\Overseer\Traits
- */
 trait OverseerTrait
 {
     /**
@@ -40,13 +36,12 @@ trait OverseerTrait
      * @param null $profileId
      * @return bool|void
      */
-    public function assignProfile($profileId = null)
+    public function assignProfile($profileId)
     {
         $profile = $this->getProfiles('id');
         if (!$profile->contains($profileId)) {
             return $this->profiles()->attach($profileId);
         }
-        return false;
     }
 
     /**
@@ -55,9 +50,12 @@ trait OverseerTrait
      * @param null $profileId
      * @return int
      */
-    public function revokeProfile($profileId = null)
+    public function revokeProfile($profileId)
     {
-        return $this->profiles()->detach($profileId);
+        if ($profileId != null) {
+            return $this->profiles()->detach($profileId);
+
+        }
     }
 
     /**
@@ -67,7 +65,7 @@ trait OverseerTrait
      *
      * @return bool
      */
-    public function syncRoles(array $profileId)
+    public function syncProfiles($profileId)
     {
         return $this->profiles()->sync($profileId);
     }
@@ -126,6 +124,21 @@ trait OverseerTrait
             if ($profile->name == $name) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if permission is active.
+     *
+     * @param $permision
+     * @return bool
+     */
+    public function isActivePermission($permision)
+    {
+        $myPermision = \KissDev\Overseer\Models\Permission::where('ident', '=', $permision)->get();
+        if ($myPermision->active) {
+            return true;
         }
         return false;
     }

@@ -53,18 +53,18 @@ class OverseerServiceProvider extends ServiceProvider
      */
     public function registerBladeDirectives()
     {
-        Blade::directive('isAuthorized', function ($expression) {
+        Blade::directive('authorized', function ($expression) {
             return "<?php if (\\Overseer::isAuthorized({$expression})): ?>";
         });
 
-        Blade::directive('endAuthorized', function ($expression) {
+        Blade::directive('endauthorized', function ($expression) {
             return '<?php endif; ?>';
         });
 
-        Blade::directive('hasProfile', function ($expression) {
+        Blade::directive('profile', function ($expression) {
             return "<?php if (\\Overseer::hasProfile({$expression})): ?>";
         });
-        Blade::directive('endProfile', function ($expression) {
+        Blade::directive('endprofile', function ($expression) {
             return '<?php endif; ?>';
         });
     }
