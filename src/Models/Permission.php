@@ -2,7 +2,6 @@
 
 namespace KissDev\Overseer\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -11,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Permission extends Model
 {
-
     /**
      * The attributes that are fillable via mass assignment.
      *
@@ -27,61 +25,61 @@ class Permission extends Model
     protected $table = 'permissions';
 
     /**
-     * Permissions can belong to many profiles.
+     * Permissions can belong to many roles.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function profiles()
+    public function roles()
     {
-        return $this->belongsToMany(\KissDev\Overseer\Models\Profile::class);
+        return $this->belongsToMany(\KissDev\Overseer\Models\Role::class);
     }
 
     /**
-     * Assigns the given profile to the permission.
+     * Assigns the given role to the permission.
      *
-     * @param null $profileId
+     * @param null $roleId
      */
-    public function assignProfile($profileId = null)
+    public function assignRole($roleId = null)
     {
-        $profiles = $this->profiles;
-        if (!$profiles->contains($profileId)) {
-            return $this->profiles()->attach($profileId);
+        $roles = $this->roles;
+        if (!$roles->contains($roleId)) {
+            return $this->roles()->attach($roleId);
         }
     }
 
     /**
-     * Revokes the given profile from the permission.
+     * Revokes the given role from the permission.
      *
-     * @param null $profileId
+     * @param null $roleId
      * @return int
      */
-    public function revokeProfile($profileId = null)
+    public function revokeRole($roleId = null)
     {
-        if(!empty($profileId)){
-            return $this->profiles()->detach((array)$profileId);
+        if (!empty($roleId)) {
+            return $this->roles()->detach((array)$roleId);
         }
     }
 
     /**
-     * Syncs the given profile(s) with the permission.
+     * Syncs the given role(s) with the permission.
      *
-     * @param null $profileId
+     * @param null $roleId
      * @return array
      */
-    public function syncProfiles($profileId = null)
+    public function syncRoles($roleId = null)
     {
-        if(!empty($profileId)){
-            return $this->profiles()->sync((array)$profileId);
+        if (!empty($roleId)) {
+            return $this->roles()->sync((array)$roleId);
         }
     }
 
     /**
-     * Revokes all profiles from the permission.
+     * Revokes all roles from the permission.
      *
      * @return int
      */
-    public function revokeAllProfiles()
+    public function revokeAllRoles()
     {
-        return $this->profiles()->detach();
+        return $this->roles()->detach();
     }
 }

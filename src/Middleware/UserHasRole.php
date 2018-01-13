@@ -1,4 +1,5 @@
 <?php
+
 namespace KissDev\Overseer\Middleware;
 
 use Closure;
@@ -8,7 +9,7 @@ use Illuminate\Contracts\Auth\Guard;
  * Class UserHasRole
  * @package KissDev\Overseer\Middleware
  */
-class UserHasProfile
+class UserHasRole
 {
     /**
      * @var Guard
@@ -32,9 +33,9 @@ class UserHasProfile
      * @param $role
      * @return mixed
      */
-    public function handle($request, Closure $next, $profile)
+    public function handle($request, Closure $next, $role)
     {
-        if (!$this->auth->user()->hasProfile($profile)) {
+        if (!$this->auth->user()->hasRole($role)) {
             if ($request->ajax()) {
                 return response('Unauthorized action.', 401);
             }

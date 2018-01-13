@@ -1,8 +1,9 @@
 <?php
+
 namespace KissDev\Overseer\Middleware;
 
 use Closure;
-use KissDev\Overseer\Models\Profile;
+use KissDev\Overseer\Models\Role;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Route;
 
@@ -37,11 +38,7 @@ class UserHasPermission
     public function handle($request, Closure $next)
     {
         $permissions = $this->getIdentFromRoute();
-
         if ($this->auth->check()) {
-            if (!$this->auth->user()->isActivePermission($permissions)) {
-                abort(401, 'Unauthorized action.');
-            }
             if (!$this->auth->user()->isAuthorized($permissions)) {
                 if ($request->ajax()) {
                     return response('Unauthorized action.', 401);
@@ -49,17 +46,7 @@ class UserHasPermission
                 abort(401, 'Unauthorized action.');
             }
         } else {
-            $guest = Profile::whereName('guest')->first();
-            if ($guest) {
-                if (!$guest->isAuthorized($permissions)) {
-                    if ($request->ajax()) {
-                        return response('Unauthorized action.', 401);
-                    }
-                    abort(401, 'Unauthorized action.');
-                }
-            } else {
-                abort(401, 'Unauthorized action.');
-            }
+            abort(401, 'Unauthorized action.');
         }
         return $next($request);
     }
@@ -73,9 +60,8 @@ class UserHasPermission
     {
         $currentRouteAction = class_basename(Route::currentRouteAction());
         if ($currentRouteAction == null) {
-            abort(401, 'Unauthorized action.');
+            abort(401, 'The route dont have Controllers');
         }
         return $currentRouteAction;
-
     }
 }

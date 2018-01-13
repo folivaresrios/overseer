@@ -3,8 +3,7 @@
 namespace KissDev\Overseer;
 
 use Illuminate\Contracts\Auth\Guard;
-use KissDev\Overseer\Models\Profile;
-
+use KissDev\Overseer\Models\Role;
 
 /**
  * Class Overseer
@@ -36,11 +35,6 @@ class Overseer
     {
         if ($this->auth->check()) {
             return $this->auth->user()->isAuthorized($permissions);
-        } else {
-            $guest = Profile::whereName('guest')->first();
-            if ($guest) {
-                return $guest->isAuthorized($permissions);
-            }
         }
         return false;
     }
@@ -51,10 +45,10 @@ class Overseer
      * @param $profile
      * @return bool
      */
-    public function hasProfile($profile)
+    public function hasRole($profile)
     {
         if ($this->auth->check()) {
-            return $this->auth->user()->hasProfile($profile);
+            return $this->auth->user()->hasRole($profile);
         }
         return false;
     }

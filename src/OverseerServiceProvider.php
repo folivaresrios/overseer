@@ -61,10 +61,10 @@ class OverseerServiceProvider extends ServiceProvider
             return '<?php endif; ?>';
         });
 
-        Blade::directive('profile', function ($expression) {
-            return "<?php if (\\Overseer::hasProfile({$expression})): ?>";
+        Blade::directive('role', function ($expression) {
+            return "<?php if (\\Overseer::hasRole({$expression})): ?>";
         });
-        Blade::directive('endprofile', function ($expression) {
+        Blade::directive('endrole', function ($expression) {
             return '<?php endif; ?>';
         });
     }

@@ -4,11 +4,10 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateProfilesPermissionsTable
+ * Class CreatePermissionRoleTable
  */
-class CreatePermissionProfileTable extends Migration
+class CreatePermissionRoleTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -16,15 +15,17 @@ class CreatePermissionProfileTable extends Migration
      */
     public function up()
     {
-        Schema::create('permission_profile', function (Blueprint $table) {
+        Schema::create('permission_role', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('profile_id')->unsigned()->index();
+            $table->integer('role_id')->unsigned()->index();
             $table->integer('permission_id')->unsigned()->index();
             $table->timestamps();
 
             //Setup Foreign Keys
-            $table->foreign('profile_id')->references('id')->on('profiles');
+            $table->foreign('role_id')->references('id')->on('roles');
             $table->foreign('permission_id')->references('id')->on('permissions');
+
+            $table->unique(['permission_id', 'role_id']);
         });
     }
 
@@ -35,7 +36,6 @@ class CreatePermissionProfileTable extends Migration
      */
     public function down()
     {
-        Schema::drop('permission_profile');
+        Schema::drop('permission_role');
     }
-
 }

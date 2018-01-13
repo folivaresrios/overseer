@@ -4,14 +4,15 @@ namespace KissDev\Overseer\Models;
 
 use Config;
 use Illuminate\Database\Eloquent\Model;
-
+use KissDev\Overseer\Traits\CacheTrait;
 
 /**
- * Class Profile
+ * Class Role
  * @package KissDev\Overseer\Models
  */
-class Profile extends Model
+class Role extends Model
 {
+    use CacheTrait;
     /**
      * The attributes that are fillable via mass assignment.
      *
@@ -24,10 +25,20 @@ class Profile extends Model
      *
      * @var string
      */
-    protected $table = 'profiles';
+    protected $table = 'roles';
 
     /**
-     * Profiles can belong to many users.
+     * The Overseer cache tag used by the model.
+     *
+     * @return string
+     */
+    public static function getCacheTag()
+    {
+        return 'roles';
+    }
+
+    /**
+     * Roles can belong to many users.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -37,31 +48,18 @@ class Profile extends Model
     }
 
     /**
-     * Profiles can belong to many permissions.
+     * Roles can belong to many permissions.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function permissions()
     {
-        return $this->belongsToMany(\KissDev\Overseer\Models\Permission::class);
+        return $this->belongsToMany(\KissDev\Overseer\Models\Permission::class)->withTimestamps();
+        ;
     }
 
     /**
-     * Get permission "ident" assigned to profile.
-     *
-     * @return array
-     */
-    public function getPermissions()
-    {
-        foreach ($this->permissions as $permission) {
-            $myPermissions[] = $permission->ident;
-        }
-
-        return $myPermissions;
-    }
-
-    /**
-     * Checks if the profiles has the given permission.
+     * Checks if the roles has the given permission.
      *
      * @param $permission
      * @return bool
@@ -73,7 +71,7 @@ class Profile extends Model
     }
 
     /**
-     * Assigns the given permission to the profile.
+     * Assigns the given permission to the role.
      *
      * @param null $permissionId
      *
@@ -83,12 +81,15 @@ class Profile extends Model
     {
         $permissions = $this->permissions;
         if (!$permissions->contains($permissionId)) {
+            $this->flushPermissionCache();
+
             return $this->permissions()->attach($permissionId);
         }
+        return false;
     }
 
     /**
-     * Revokes the given permission from the profile.
+     * Revokes the given permission from the role.
      *
      * @param null $permissionId
      * @return bool|int
@@ -98,27 +99,43 @@ class Profile extends Model
         if ($permissionId) {
             return false;
         }
+        $this->flushPermissionCache();
+
         return $this->permissions()->detach($permissionId);
     }
 
     /**
-     * Syncs the given permission(s) with the profile.
+     * Syncs the given permission(s) with the role.
      *
      * @param null $permissionIds
      * @return array
      */
     public function syncPermissions(array $permissionIds = null)
     {
+        $this->flushPermissionCache();
+
         return $this->permissions()->sync((array)$permissionIds);
     }
 
     /**
-     * Revokes all permissions from the profile.
+     * Revokes all permissions from the role.
      *
      * @return int
      */
     public function revokeAllPermissions()
     {
+        $this->flushPermissionCache();
+
         return $this->permissions()->detach();
+    }
+
+    /**
+     * Get fresh permission slugs assigned to role from database.
+     *
+     * @return array
+     */
+    public function getFreshPermissions()
+    {
+        return $this->permissions->where('active', true)->pluck('ident')->all();
     }
 }
