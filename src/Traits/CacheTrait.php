@@ -1,51 +1,47 @@
 <?php
 
-namespace KissDev\Overseer\Traits;
+namespace issDev\Overseer\Traits;
 
 use Illuminate\Support\Facades\Cache;
 
 trait CacheTrait
 {
-    /**
-     * The Overseer cache tag used by the model.
-     * Should be implemented by Model using this trait
-     *
-     * @return string
-     */
-    public static function getCacheTag()
+    protected $minutes = 60;
+    protected $relationship;
+
+    public function cacheKey()
     {
-        return '';
+        return sprintf(
+        '%s/%s-%s',
+        $this->getRelationship(),
+        $this->getKey(),
+        $this->updated_at->timestamp
+    );
     }
 
-    /**
-     * Get fresh permission tag assigned to the user or role.
-     * Internal method, should be implemented by Model using this trait
-     *
-     * @return array
-     */
-    protected function getFreshPermissions()
+    public function flushCache()
     {
+        Cache::forget($this->cacheKey());
     }
 
-    /**
-     * Flush the permission cache repository.
-     *
-     * @return void
-     */
-    public function flushPermissionCache()
+    public function getCacheRelationship($relationship, $eager = false)
     {
-        $primaryKey = $this[$this->primaryKey];
-        $cacheKey = 'overseer.' . substr(static::getCacheTag(), 0, -1) . '.permissions.' . $primaryKey;
-
-        Cache::forget($cacheKey);
-    }
-
-    public function getPermissions()
-    {
-        $primaryKey = $this[$this->primaryKey];
-        $cacheKey = 'overseer.' . substr(static::getCacheTag(), 0, -1) . '.permissions.' . $primaryKey;
-        return Cache::remember($cacheKey, 60, function () {
-            return $this->getFreshPermissions();
+        $this->setRelationship($relationship);
+        return Cache::remember($this->cacheKey(), $this->minutes, function () use ($relationship, $eager) {
+            if (!$eager) {
+                return $this->{$relationship}();
+            }
+            return $this->{$relationship};
         });
+    }
+
+    public function setRelationship($relationship)
+    {
+        $this->relationship = $relationship;
+    }
+
+    public function getRelationship()
+    {
+        return $this->relationship;
     }
 }

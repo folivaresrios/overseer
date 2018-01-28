@@ -3,7 +3,6 @@
 namespace KissDev\Overseer\Middleware;
 
 use Closure;
-use KissDev\Overseer\Models\Role;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Route;
 
