@@ -3,6 +3,8 @@ kissDev Overseer Package
 [![Laravel 5.3](https://img.shields.io/badge/Laravel-5.3-red.svg?style=flat-square)](http://laravel.com)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
 
+Structure Based: [caffeinated/shinobi](https://github.com/caffeinated/shinobi)
+
 Overseer provides a simple profile-based permissions system to Laravel's built in Auth system. Overseer provides support for the following ACL structure:
 
 - Every user can have zero or more profiles.
@@ -10,7 +12,7 @@ Overseer provides a simple profile-based permissions system to Laravel's built i
 
 Permissions are then inherited to the user through the user's assigned profiles.
 
-The package follows the FIG standards [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md), [PSR-2] (https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md), and [PSR-4](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md). 
+The package follows the FIG standards [PSR-1](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md), [PSR-2](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md), and [PSR-4](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader.md). 
 This package is not unit tested, but is planned to be covered.
 
 Documentation
