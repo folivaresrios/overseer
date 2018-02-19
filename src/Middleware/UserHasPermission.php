@@ -37,14 +37,7 @@ class UserHasPermission
     public function handle($request, Closure $next)
     {
         $permissions = $this->getIdentFromRoute();
-        if ($this->auth->check()) {
-            if (!$this->auth->user()->isAuthorized($permissions)) {
-                if ($request->ajax()) {
-                    return response('Unauthorized action.', 401);
-                }
-                abort(401, 'Unauthorized action.');
-            }
-        } else {
+        if (!$this->auth->user()->isAuthorized($permissions)) {
             abort(401, 'Unauthorized action.');
         }
         return $next($request);
@@ -57,7 +50,7 @@ class UserHasPermission
      */
     private function getIdentFromRoute()
     {
-        $currentRouteAction = class_basename(Route::currentRouteAction());
+        $currentRouteAction = Route::currentRouteAction();
         if ($currentRouteAction == null) {
             abort(401, 'The route dont have Controllers');
         }

@@ -8,7 +8,6 @@ use Illuminate\Database\Migrations\Migration;
  */
 class CreatePermissionsTable extends Migration
 {
-
     /**
      * Run the migrations.
      *
@@ -19,7 +18,7 @@ class CreatePermissionsTable extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ident');
-            $table->string('description');
+            $table->string('name');
             $table->boolean('active')->default(1);
             $table->timestamps();
 
@@ -37,5 +36,4 @@ class CreatePermissionsTable extends Migration
     {
         Schema::drop('permissions');
     }
-
 }

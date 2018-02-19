@@ -4,9 +4,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateRoleTable
+ * Class CreatesRoleTable
  */
-class CreateRoleTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.

@@ -32,7 +32,7 @@ trait OverseerTrait
         }
     }
 
-    public function syncRoles($roleId)
+    public function syncRoles(array $roleId = [])
     {
         if (!empty($roleId)) {
             $this->flushCache();

@@ -9,7 +9,7 @@ class Permission extends Model
 {
     use CacheTrait;
 
-    protected $fillable = ['ident', 'description', 'active'];
+    protected $fillable = ['ident', 'name', 'active'];
 
     public function roles()
     {
@@ -38,11 +38,11 @@ class Permission extends Model
         }
     }
 
-    public function syncRoles($roleId = null)
+    public function syncRoles(array $roleId = [])
     {
         if (!empty($roleId)) {
             $this->flushCache();
-            return $this->roles()->sync((array)$roleId);
+            return $this->roles()->sync($roleId);
         }
     }
 

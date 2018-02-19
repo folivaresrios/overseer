@@ -44,12 +44,12 @@ class Role extends Model
         }
     }
 
-    public function syncPermissions($permissionIds = null)
+    public function syncPermissions(array $permissionIds = [])
     {
         if (!empty($permissionId)) {
             $this->flushCache();
 
-            return $this->permissions()->sync((array)$permissionIds);
+            return $this->permissions()->sync($permissionIds, false);
         }
     }
 
