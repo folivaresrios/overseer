@@ -1,4 +1,4 @@
-kissDev Overseer Package
+kissDev Overseer Package [Deprecated]
 ===================
 [![Laravel 5.3](https://img.shields.io/badge/Laravel-5.3-red.svg?style=flat-square)](http://laravel.com)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
